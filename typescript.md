@@ -282,3 +282,33 @@ Argument of type '({ senderPlace: string; destinationPlace: string; size: string
 ​      Type '{ sender_place: string; destination_place: string; size: string; id: number; tax: number; postage_price: number; quantity: number;
 ```
 
+
+
+## 自作Params, Query関数で複数クエリ対応（複数QUery string parameters）
+
+```typescript
+const get = (path: string, params: string[] = [], query: string[][] = []) => {
+  return {
+    fetch: async () => {
+      let pathParams = '';
+      if (params.length) {
+        pathParams = `/${params.join('/')}`;
+      }
+      return axios.get(`${API_URL}${path}${pathParams}`, {
+        params: query.reduce((hs: Record<string, string>, param: string[]) => {
+          //hsを複数指定すればURLの後ろに追加可能。
+          //http://localhost/api/order?page=1&order_by=company_name_asc&query=15
+          //query1(first hs) = $order_by=company_name 
+          //query2(second hs) = $query=15
+          //になる
+          hs[param[0]]= param[1], hs[param[2]] = param[3];
+          return hs;
+        },  {}),
+      });
+    },
+    bindParams: (...args: string[]) => get(path, [...params, ...args], query),
+    bindQuery: (...args: string[][]) => get(path, params, [...query, ...args]),
+  };
+};
+```
+
