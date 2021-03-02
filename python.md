@@ -1,90 +1,24 @@
-## LINE notify
 
-プログラミンググループへのアクセストークン
 
-MLT8ZR5McAM1hYpydpcTb9M9jUttlbVl03qJeAqTGIF
+# 自然言語とは
 
-LKYvxRI4TjrGwMMb1KMW3UQfkUZ577NPfOdF
+日本語や英語などの人間が使う言語
 
-とりあえずJSで描いてみた
+検索エンジン、機械翻訳、予測変換などが自然言語処理の応用。
 
-```javascript
-const axios = require('axios');
-const qs = require('querystring');
+#### 形態素解析
 
-const LINE_NOTIFY_API_URL = 'https://notify-api.line.me/api/notify';
+文書を単語に分割する技術
 
-const LINE_NOTIFY_TOKEN = MLT8ZR5McAM1hYpydpcTb9M9jUttlbVl03qJeAqTGIF;
+#### Word2vec 
 
-let config = {
-	url: LINE_NOTIFY_API_URL,
-	method: 'post',
-	headers: {
-		'Content-Type': 'application/x-www-form-urlencoded',
-		Authorization: 'Bearer ' + LINE_NOTIFY_TOKEN,
-	},
-	data: qs.stringify({
-		message: '自動化のテストしてます',
-	}),
-};
+文書内での関係性を踏まえて、単語をベクトル化する
 
-async function getRequest() {
-	try {
-		const responseLINENotify = await axios.request(config);
-		console.log(responseLINENotify.data);
-	} catch (error) {
-		console.error(error);
-	}
-}
+#### リカレントニューラルネットワーク 
 
-getRequest();
-```
+時系列を扱うのが得意なニュートラルネットワークの一種
 
-node line.jsを叩くとエラー。
+#### seq2seq 
 
-```
-➜ node line.js 
-internal/modules/cjs/loader.js:834
-  throw err;
-  ^
-
-Error: Cannot find module 'axios'
-Require stack:
-- /home/lilshimon/project/line.js
-    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:831:15)
-    at Function.Module._load (internal/modules/cjs/loader.js:687:27)
-    at Module.require (internal/modules/cjs/loader.js:903:19)
-    at require (internal/modules/cjs/helpers.js:74:18)
-    at Object.<anonymous> (/home/lilshimon/project/line.js:1:15)
-    at Module._compile (internal/modules/cjs/loader.js:1015:30)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)
-    at Module.load (internal/modules/cjs/loader.js:879:32)
-    at Function.Module._load (internal/modules/cjs/loader.js:724:14)
-    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12) {
-  code: 'MODULE_NOT_FOUND',
-  requireStack: [ '/home/lilshimon/project/line.js' ]
-}
-```
-
-npm install axios is fine
-
-next error is below
-
-```
-➜ node line.js 
-/home/lilshimon/project/line.js:6
-const LINE_NOTIFY_TOKEN = MLT8ZR5McAM1hYpydpcTb9M9jUttlbVl03qJeAqTGIF;
-                          ^
-
-ReferenceError: MLT8ZR5McAM1hYpydpcTb9M9jUttlbVl03qJeAqTGIF is not defined
-    at Object.<anonymous> (/home/lilshimon/project/line.js:6:27)
-    at Module._compile (internal/modules/cjs/loader.js:1015:30)
-    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1035:10)
-    at Module.load (internal/modules/cjs/loader.js:879:32)
-    at Function.Module._load (internal/modules/cjs/loader.js:724:14)
-    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:60:12)
-    at internal/main/run_main_module.js:17:47
-```
-
-'' is working. I have to invite line notify in my group.
+RNNをベースにした文書を生成可能なモデル
 
