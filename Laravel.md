@@ -1634,3 +1634,13 @@ https://reffect.co.jp/laravel/laravel-storage-manipulation-master#i-3
 == reference ==
 
 https://stackoverflow.com/questions/40129372/laravel-how-to-send-image-or-file-to-api
+
+
+
+# Orderby null last
+
+```
+->orderByRaw('column name' IS NULL ASC) // add
+->orderBy
+```
+
