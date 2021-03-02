@@ -1639,12 +1639,12 @@ https://stackoverflow.com/questions/40129372/laravel-how-to-send-image-or-file-t
 
 # Orderby null last
 
-昇順、降順でカラムを並べ替えした場合、MYSQLの仕様だとnullが一番上になったりする。
+ASCでカラムを並べ替えした場合、MYSQLの仕様だとnullが一番上になる。
 
-nullを一番下にしたい場合はSQL文を生で書くか、Eloquentで書く
+nullを一番下にしたい場合は
 
 ```
 ->orderByRaw('column name IS NULL ASC') // add
-->orderBy
+->orderBy('column name', 'asc')
 ```
 
