@@ -1639,6 +1639,14 @@ https://stackoverflow.com/questions/40129372/laravel-how-to-send-image-or-file-t
 
 ## S3
 
+#### laravelにS3を変更する
+
+```php
+composer require league/flysystem-aws-s3-v3
+```
+
+
+
 ### ドライバ設定
 
 config/filesystems.phpのAWS環境設定を編集
