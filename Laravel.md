@@ -1645,6 +1645,12 @@ https://stackoverflow.com/questions/40129372/laravel-how-to-send-image-or-file-t
 composer require league/flysystem-aws-s3-v3
 ```
 
+error == set version
+
+```
+composer require league/flysytem-aws-s3-v3 ~1.0
+```
+
 
 
 ### ドライバ設定
@@ -1705,6 +1711,30 @@ Storage::disk('s3')->delete('file_path/file_name)')
 #### Laravel 5.8 file storage
 
 https://readouble.com/laravel/5.8/ja/filesystem.html
+
+
+
+### display s3 file infomation on brawser
+
+ブラウザでURLを叩いたときのエラー。
+
+```
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+＜Error＞
+＜Code＞AccessDenied＜/Code＞
+＜Message＞Access Denied＜/Message＞
+＜RequestId＞7F91C2D657A3B816＜/RequestId＞
+＜HostId＞
+TsFf5WHTPoU6ddu6mSJ3EOWPjcxfLzzC/OQPYl2aDi8i1mHItmKdMqVR0y3Qa/WFcXatifPiGHE=
+＜/HostId＞
+＜/Error＞
+```
+
+考えられる原因
+
+・S3のバケットポリシー
+
+・CloudFrontからのみのアクセス設定(今回はなし)
 
 # Orderby null last
 
