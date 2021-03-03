@@ -1844,3 +1844,40 @@ nullを一番下にしたい場合は
 ->orderBy('column name', 'asc')
 ```
 
+
+
+# Array_mergeのわな
+
+nullや''をarray_mergeするとarrayが全てからになってしまう。
+
+空の配列をセットして入れてあげないと結果すべて上書きされてしまう。
+
+```php
+            if (!preg_match('/null/', $orderItem["file_path"])) {
+                $file_one_name = $orderItem['file_path']->getClientOriginalName();
+                $file_one = ['file_path' => $file_one_name];
+                Storage::putFileAs('/public', $orderItem["file_path"], $file_one_name);
+            }
+            if (isset($orderItem['file_path_two'])) {
+                if (!preg_match('/null/', $orderItem["file_path_two"])) {
+                    $file_two_name = $orderItem['file_path_two']->getClientOrinalName();
+                    $file_two = ['file_path_two' => $file_two_name];
+                    Storage::putFileAs('/public', $orderItem["file_path_two"], $file_two_name);
+                }
+            } else {
+                $file_two = array();
+            }
+            if (isset($orderItem['file_path_three'])) {
+                if (!preg_match('/null/', $orderItem["file_path_three"])) {
+                    $file_three_name = $orderItem['file_path_three']->getClientOriginalName();
+                    $file_three = ['file_path_three' => $file_three_name];
+                    Storage::putFileAs('/public', $orderItem["file_path_three"], $file_three_name);
+                }
+            } else {
+                $file_three = array();
+            }
+
+            $files = array_merge($file_one, $file_two, $file_three);
+            $order_item->fill($files)->save();
+```
+
