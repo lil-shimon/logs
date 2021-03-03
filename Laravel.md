@@ -1740,12 +1740,95 @@ TsFf5WHTPoU6ddu6mSJ3EOWPjcxfLzzC/OQPYl2aDi8i1mHItmKdMqVR0y3Qa/WFcXatifPiGHE=
 
 get all files list on s3
 
-```
+```php
 // ファイル一覧
 $list = Storage::disk('s3')->files('');
 
 //下の階層のファイル一覧も取得
 $list = Storage::disk('s3')->allFiles('');
+```
+
+
+
+### ファイル名が異なって保存
+
+s3では本来のファイル名で保存されているのにphpmyadminでは自動生成された名前で保存されてしまう。
+
+保存している関数の一つの例
+
+```php
+    /**
+     * @param array $orderItem
+     * @param string $orderId
+     */
+    public function update(array $orderItem, string $orderId)
+    {
+        try {
+            DB::beginTransaction();
+
+            $order_item = $this->order_item->where('order_id', $orderId)->first();
+
+            //見積書がセットされていたら実行
+            if (isset($orderItem['quotation'])) {
+                if (!preg_match('/null/', $orderItem["quotation"])) {
+                    $quotation_name = $orderItem['quotation']->getClientOriginalName();
+                    Storage::putFileAs('/public', $orderItem["quotation"], $quotation_name);
+                }
+            }
+
+            //注文書がセットされていたら実行
+            if (isset($orderItem['invoice'])) {
+                if (!preg_match('/null/', $orderItem["invoice"])) {
+                    $invoice_name = $orderItem['invoice']->getClientOriginalName();
+                    Storage::putFileAs('/public', $orderItem["invoice"], $invoice_name);
+                }
+            }
+
+            // 見積もり部がなければ作成
+            if (!$order_item) {
+                $order_item = new OrderItem;
+
+                if (isset($orderItem['quotation'])) {
+
+                    if (!preg_match('/null/', $orderItem["quotation"])) {
+                        $quotation_name = $orderItem['quotation']->getClientOriginalName();
+                        Storage::putFileAs('/public', $orderItem["quotation"], $quotation_name);
+                    }
+                }
+
+                if (isset($orderItem['invoice'])) {
+                    if (!preg_match('/null/', $orderItem["invoice"])) {
+                        $invoice_name = $orderItem['invoice']->getClientOriginalName();
+                        Storage::putFileAs('/public', $orderItem["invoice"], $invoice_name);
+                    }
+                }
+
+                $order_item->fill(array_merge($orderItem, ["order_id" => $orderId]))->save();
+            }
+
+            $order_item->fill($orderItem)->save();
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack($th);
+        }
+    }
+}
+
+```
+
+phpmyadminでファイル名を確認->自動生成された文字列(以前から挙動は変化していない。)
+
+s3では指定したファイル名(この関数の場合アップロードしたファイル名を取得して保存している)でしっかりと保存されている。
+
+原因
+
+Storage::putFileAsでgetClientOriginalNameで取得したファイルをs3に保存していたから満足していたが、dbへの保存はfill->save()で行っていた。そのためファイル名はdb上だと自動生成文字列でcommitされていた。
+
+なのでfillの時にarray_merge
+
+```php
+$order->fill(array_merge($order, ['file' => $file_name]))->save();
 ```
 
 
