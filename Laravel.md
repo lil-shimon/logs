@@ -1736,6 +1736,20 @@ TsFf5WHTPoU6ddu6mSJ3EOWPjcxfLzzC/OQPYl2aDi8i1mHItmKdMqVR0y3Qa/WFcXatifPiGHE=
 
 ・CloudFrontからのみのアクセス設定(今回はなし)
 
+
+
+get all files list on s3
+
+```
+// ファイル一覧
+$list = Storage::disk('s3')->files('');
+
+//下の階層のファイル一覧も取得
+$list = Storage::disk('s3')->allFiles('');
+```
+
+
+
 # Orderby null last
 
 ASCでカラムを並べ替えした場合、MYSQLの仕様だとnullが一番上になる。
