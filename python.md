@@ -51,6 +51,31 @@ print(np.sum(b, axis=1)) #horizontal
 x = np.lispace(-5, 5) #-5から5までの間を50の区間で区切る
 ```
 
+## 自然対数log
+
+```
+def get_log(x):
+	return np.log(x) # y = log X
+	
+print(get_log(1)) # 0.0 
+```
+
+## ネイピア数 
+
+```
+def get_exp:
+	return np.exp(x)
+
+print(get_exp(1)) 
+```
+
+## ∑
+
+```
+a = np.array([1, 2, 3, 4, 5])
+print(np.sum(a))
+```
+
 
 
 # Matplotlib
