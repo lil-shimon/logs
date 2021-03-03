@@ -1637,6 +1637,67 @@ https://stackoverflow.com/questions/40129372/laravel-how-to-send-image-or-file-t
 
 
 
+## S3
+
+### ドライバ設定
+
+config/filesystems.phpのAWS環境設定を編集
+
+#### キャッシュ
+
+s3の設定ファイルでキャッシュの設定可能。
+
+```php
+'s3' => [
+    'driver' => 's3',
+
+    // Other Disk Options...
+
+    'cache' => [
+        'store' => 'memcached',
+        'expire' => 600,
+        'prefix' => 'cache-prefix',
+    ],
+],
+```
+
+### S3の一時的なURL　temporaryUrl method
+
+```php
+$url = Storage::temporaryUrl(
+    'file.jpg', now()->addMinutes(5)
+  	// file path + DateTime instance
+);
+```
+
+### S3 file upload special settings
+
+laravel putfile methodで設定が可能
+
+```php
+Storage::putFile('model name', new File('/path/to/'), 'public')
+```
+
+### set file name w S3
+
+```php
+$file = $data->file('file_path')->storeAs(
+	'file_paths', $data->order()->id, 'S3'
+)
+```
+
+### S3 delete file
+
+```php
+Storage::disk('s3')->delete('file_path/file_name)')
+```
+
+#### === reference ===
+
+#### Laravel 5.8 file storage
+
+https://readouble.com/laravel/5.8/ja/filesystem.html
+
 # Orderby null last
 
 ASCでカラムを並べ替えした場合、MYSQLの仕様だとnullが一番上になる。
