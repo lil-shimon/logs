@@ -78,6 +78,15 @@ print(np.sum(a))
 
 
 
+## 分散
+
+```
+x = array (.....)
+print (np.var(x))
+```
+
+
+
 # Matplotlib
 
 グラフを描画するのにmatplotlib.pyplotをいうモジュールがある

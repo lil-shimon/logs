@@ -1684,6 +1684,17 @@ $url = Storage::temporaryUrl(
 );
 ```
 
+#### Response header options
+
+```
+response-content-type
+	// application/octet-stream
+response-content-language //jp
+response-expires //
+```
+
+
+
 ### S3 file upload special settings
 
 laravel putfile methodで設定が可能
