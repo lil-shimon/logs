@@ -254,3 +254,28 @@ To notice the end of function, the pair of brankets are needed.
 ---- reference https://medium.com/javascript-in-plain-english/how-to-use-async-function-in-react-hook-useeffect-typescript-js-6204a788a435
 
 ---- with useEffect ---> React 'how to use useEffect with async function'
+
+
+
+## setTimeout
+
+数秒後に処理をしたい時に使うメソッド
+
+10秒後なら
+
+```js
+setTimeout(() => {
+	// 処理
+}, 10000)
+```
+
+useEffectと組み合わせて実装した。(flash message)(autoHideDurationで自動でスナック・バーを消すことはできるが、ページ遷移した時に遷移先でも新たに同じ通知が飛んでしまうため。)
+
+```react
+useEffect(() => {
+	setTimeout(() => {
+		dispatch(setFlashSuccess(''))
+	}, 6000)
+}, [])
+```
+
