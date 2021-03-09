@@ -18,6 +18,16 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+# serializer
+
+Serializer は データ の入出力を扱い、モデルへの橋渡しをするクラス。
+
+# superuser
+
+```
+python manage.py createsuperuser
+```
+
 
 
 # Invalid HTTP_HOST header: '0.0.0.0:8000'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
