@@ -1892,3 +1892,134 @@ nullや''をarray_mergeするとarrayが全てからになってしまう。
             $order_item->fill($files)->save();
 ```
 
+
+
+# Fulltext search
+
+```php
+/**
+     *
+     * @param array $data
+     * @return object
+     */
+    public function getSearchForFront(array $data)
+    {
+        if (empty($data)) {
+            return null;
+        }
+        $keyword = '';
+        if (!empty($data['query'])) {
+            $keyword = $this->getSearchKeyWord($data['query']);
+        }
+        $query = $this->article->query();
+        $query->leftJoin(
+            'products_abcs',
+            function ($join) {
+                $join->on('products_abcs.products_id', '=', 'products.id');
+                $join->on('products_abcs.timestamp', '=', 'products.timestamp');
+            }
+        )->leftJoin(
+            'contents_partners',
+            'contents_partners.id',
+            'products_abcs.contents_partner_id'
+        )->leftJoin(
+            'products_tags',
+            function ($join) {
+                $join->on('products_tags.products_id', '=', 'products.id');
+                $join->on('products_tags.timestamp', '=', 'products.timestamp');
+            }
+        )->leftJoin(
+            'products_details',
+            function ($join) {
+                $join->on('products_details.products_id', '=', 'products.id');
+                $join->on('products_details.timestamp', '=', 'products.timestamp');
+            }
+        )->leftJoin(
+            'kenkey_media_common_limited.master_article_tags as master_article_tags',
+            function ($join) {
+                $join->on('master_article_tags.id', '=', 'products_tags.tag_id');
+            }
+        );
+        // キーワード検索
+        if (!empty($keyword)) {
+            $query->where(function ($query) use ($keyword) {
+                $query->orWhereRaw("match(products_abcs.title) against (? IN BOOLEAN MODE)", $keyword);
+                $query->orWhereRaw("match(products_details.text) against (? IN BOOLEAN MODE)", $keyword);
+                $query->orWhereRaw("match(contents_partners.name) against (? IN BOOLEAN MODE)", $keyword);
+                $query->orWhereRaw("match(master_article_tags.name) against (? IN BOOLEAN MODE)", $keyword);
+            });
+        } else if (!empty($data['tagname'])) {
+            $tagname = $data['tagname'];
+            $query->where(function ($query) use ($tagname) {
+                $query->orWhereRaw("match(master_article_tags.name) against (? IN BOOLEAN MODE)", $tagname);
+            });
+        }
+        // 対象カテゴリーのデータを取得
+        if (!empty($data['category'])) {
+            $query->where('products_abcs.category_id', $data['category']);
+        }
+        // 投稿CPのデータ取得
+        if (!empty($data['cpid'])) {
+            $query->where('contents_partners.id', $data['cpid']);
+        }
+        $query->where('products.is_public', 1)
+            ->where('products.is_batch', 1)
+            ->where('products_abcs.status_id', 3)
+            ->where('contents_partners.is_public', 1);
+        // 公開期間中のデータを取得
+        $now = Carbon::now()->format('Y-m-d H:i:s');
+        $this->setWhereDuringReleaseDate($query, $now, 'products_abcs.show_start_datetime', 'products_abcs.show_end_datetime');
+        // C情報提供開始日以降、情報提供期間の指定がある場合はその日数を含める
+        $this->cpProvisionCondition($query, $now);
+        $query->with('productsAttribute.contentsPartner.contentsPartnerBanners', 'articleDetails', 'articleImages', 'productsliderImages');
+        $query->select('products.id', 'products.timestamp', 'products_abcs.show_start_datetime');
+        $query->groupBy('products.id', 'products.timestamp', 'products_abcs.show_start_datetime');
+        $query->orderBy('products_abcs.show_start_datetime', 'desc')
+            ->orderBy('products.id', 'asc');
+        if (!empty($data['limit'])) {
+            $data['per_page'] = $data['limit'];
+        }
+        return $query->paginate($data['per_page'] ?? null);
+    }
+```
+
+
+
+```php
+/**
+     * キーワード整形
+     *
+     * @param string $value
+     * @return void
+     */
+    private function getSearchKeyWord(string $value)
+    {
+        //全角スペースを半角スペースに置換
+        $value = str_replace('　', ' ', $value);
+        //前後のスペース削除
+        $value = trim($value);
+        //連続スペースを1スペースに置換
+        $value = preg_replace('/\s+/', ' ', $value);
+        //スペースで文字列を分割
+        $arrayKeyword = explode(' ', $value);
+        $keywordStr = '';
+        if (count($arrayKeyword) > 1) {
+            foreach ($arrayKeyword as $key => $keyword) {
+                $str = mb_substr($keyword, 0, 1);
+                if ($str !== '-' && $str !== '+' && $str !== '*') {
+                    if ($key == 0) {
+                        $keywordStr = '+' . $keyword;
+                    } else {
+                        $keywordStr .= ' +' . $keyword;
+                    }
+                } else {
+                    $keywordStr .= ' ' . $keyword;
+                }
+            }
+        } else {
+            $keywordStr = $value;
+        }
+        return $keywordStr;
+    }
+```
+

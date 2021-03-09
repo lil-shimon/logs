@@ -36,3 +36,18 @@ UPDATE table_name SET column_name = 'the data you want to input'
 # type
 
 int(10)
+
+
+
+# With query expansion
+
+これは、検索を 2 回実行することで機能します。2 回目の検索での検索フレーズは、1 回目の検索でのもっとも関連性の高い数個のドキュメントと連結されたオリジナルの検索フレーズです。したがって、これらのドキュメントのいずれかに単語 「databases」 および単語 「MySQL」 が含まれている場合は、単語 「database」 が含まれていなくても、2 回目の検索で単語 「MySQL」 を含むドキュメントが検索されます。
+
+-->あいまい検索
+
+```sql
+mysql> SELECT * FROM articles
+    WHERE MATCH (title,body)
+    AGAINST ('database' WITH QUERY EXPANSION);
+```
+
