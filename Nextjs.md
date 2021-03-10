@@ -49,6 +49,24 @@ function example () {
 }
 ```
 
+
+
+
+
+# retrieve query params from a url 
+
+## get
+
+<so far>pathname(but it got whole url data)
+
+getInitialProps function is available...? (this func is called before the rest of the page is loaded.)
+
+## set
+
+<so far> router and link is working.
+
+
+
 ## implement loading screen w next js
 
 The only needs of implementing loading on nextjs app is changing  _app.tsx

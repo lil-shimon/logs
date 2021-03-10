@@ -30,6 +30,16 @@ python manage.py createsuperuser
 
 
 
+# pip freeze
+
+プロジェクトで使っているモジュールの一覧を出力してくれるコマンド
+
+```
+pip freeze > requirements-dev.txt
+```
+
+
+
 # Invalid HTTP_HOST header: '0.0.0.0:8000'. You may need to add '0.0.0.0' to ALLOWED_HOSTS.
 
 Run serverをしたときのエラー
