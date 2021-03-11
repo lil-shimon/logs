@@ -312,3 +312,13 @@ const get = (path: string, params: string[] = [], query: string[][] = []) => {
 };
 ```
 
+# The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+
+Date型を比較しようとしたら出た
+
+```typescript
+posts.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime
+```
+
+getTimeを使ってきちんとnumberにすれば解決
+
