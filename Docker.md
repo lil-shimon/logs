@@ -41,3 +41,26 @@ docker volume ls -q -f dangling=true
 docker volume rm `docker volume ls -q -f dangling=true`
 ```
 
+
+
+#### delete all images
+
+```
+docker images -aq | xargs docker rmi
+```
+
+
+
+#### delete all container
+
+```
+docker ps -aq | xargs docker rm
+```
+
+
+
+#### delete a image that have chlid dependency
+
+```
+docker rmi -f test:0.91
+```
