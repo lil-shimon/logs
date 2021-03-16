@@ -943,6 +943,22 @@ automatically create both migration file and factory file
 php artisan migrate
 ```
 
+
+
+#### $date
+
+created_at, updated_at, deleted_atなどはfillableでくくるのではなく、$dateでくくる方法もある。
+
+```
+$date = [
+	'created_at',
+	'updated_at',
+	'deleted_at'
+]
+```
+
+
+
 ## Factory
 
 edit factory
