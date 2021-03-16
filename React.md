@@ -1143,6 +1143,16 @@ const MyFunctionnalComponent: React.FC = props => {
 
 
 
+## React-react-app-rewired start not working
+
+when i run npm run build, i got this error.
+
+check node_modules/react-app-rewired and node_modules/.bin/react-app-rewired 
+
+--> if do not exist those files, try npm i again. 
+
+--> in case above one is not working enough, use yarn instead of npm.
+
 # 入れ替え
 
 React-smooth-dnd

@@ -696,6 +696,30 @@ Scheme::hasColumn('tablename', 'columnname')
 
 
 
+### Package hirak/prestissimo has a PHP requirement incompatible with your PHP version, PHP extensions and Composer version
+
+Docker-composeでlaravel環境構築する際
+
+下記コマンドでのエラー
+
+```
+composer global require hirak/prestisimo
+```
+
+composer installした後にcomposerのversionを確認
+
+```
+Composer version 2.0.11 
+```
+
+composer 2.xだとhirak/prestisimoと相性が悪い
+
+```
+composer self-update 1.10.20
+```
+
+---> indicate 
+
 # Create Table
 
 ## create migration file
@@ -735,6 +759,19 @@ class CreateProductTypesTable extends Migration
 }
 ```
 
+
+
+### cascade
+
+参照元のテーブルの変化に追従
+
+```
+onUpdate('cascade')
+onDelete('cascade')
+```
+
+
+
 #### SQLSTATE[HY000]
 
 General error: 1215 Cannot add foreign key contraint (SQL: alter table 'product_list' add contraint 'products_list_product_types_id_foreign' foreign key ('product_types_id') references 'product_types' ('id'))
@@ -746,8 +783,6 @@ SQLSTATE[23000]
 SQLSTATE[23000] Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails
 
 solution1 ---> https://ja.stackoverflow.com/questions/66169/laravel
-
-
 
 # Create API
 
@@ -983,6 +1018,20 @@ https://qiita.com/tkt989/items/c2e01ec2fe91ef5f08d2
 https://qiita.com/henriquebremenkanp/items/cd13944b0281297217a9
 
 
+
+## UpdateOrCreate
+
+upsertをできるメソッド
+
+```
+$this->MODELNAME->updateOrCreate([id array], [array data])
+```
+
+このように実装できる
+
+```php
+$this->example->updateOrCreate(["id" => $item['id']], $item)
+```
 
 
 
@@ -2023,3 +2072,10 @@ nullや''をarray_mergeするとarrayが全てからになってしまう。
     }
 ```
 
+
+
+## get ancestor table data from child table information
+
+1. Query -> child table id
+2. ancestor repository --> get ancestor data by child table id
+3. Return ---> id
