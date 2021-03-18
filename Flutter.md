@@ -8,6 +8,8 @@
 
 Material design
 
+https://material.io/design
+
 # widget
 
 widget --> widget name(), 
@@ -24,7 +26,47 @@ Center can have child widget. (in this case, text widget.)
 
 
 
+## scaffold
+
+https://api.flutter.dev/flutter/material/Scaffold-class.html
+
+appBar
+
+body
+
+Image
+
+## AppBar
+
+https://api.flutter.dev/flutter/material/AppBar-class.html
+
+Pre-build widget
+
+title, leading, actions... --> widget
+
+backgroundColor ---> color
+
+```dart
+backgroundColor: Colors.blueGray[900]
+```
+
+
+
+## image
+
+https://api.flutter.dev/flutter/widgets/Image-class.html
+
+networkImage --> url
+
+```dart
+image: NetwordImage(actual url on web) // amazing!!
+```
+
+
+
 # code
+
+## => / {} is same meaning in flutter
 
 ```dart
 
