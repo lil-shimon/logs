@@ -36,6 +36,8 @@ Center can have child widget. (in this case, text widget.)
 
 https://api.flutter.dev/flutter/material/Scaffold-class.html
 
+top level container for material app
+
 appBar
 
 ### body property
@@ -49,6 +51,8 @@ Displayed below the [appBar](https://api.flutter.dev/flutter/material/Scaffold/a
 The widget in the body of the scaffold is positioned at the top-left of the available space between the app bar and the bottom of the scaffold. To center this widget instead, consider putting it in a [Center](https://api.flutter.dev/flutter/widgets/Center-class.html) widget and having that be the body. To expand this widget instead, consider putting it in a [SizedBox.expand](https://api.flutter.dev/flutter/widgets/SizedBox/SizedBox.expand.html).
 
 If you have a column of widgets that should normally fit on the screen, but may overflow and would in such cases need to scroll, consider using a [ListView](https://api.flutter.dev/flutter/widgets/ListView-class.html) as the body of the scaffold. This is also a good choice for the case where your body is a scrollable list.
+
+> in flutter version2.0, they give us scrollBar widget to suit a huge screen like desktop app and web development. It is called show suitable scrollbars
 
 ```
 final Widget? body;

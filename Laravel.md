@@ -720,6 +720,28 @@ composer self-update 1.10.20
 
 ---> indicate 
 
+
+
+## composer install error
+
+check what is wrong
+
+```
+composer diag
+```
+
+
+
+checking pubkeys: FAIL
+
+下記のコマンドを促されているので実行
+
+```
+composer self-update --update-keys
+```
+
+https://composer.github.io/pubkeys.htmlの中のtab public keyをコピーして実行
+
 # Create Table
 
 ## create migration file
