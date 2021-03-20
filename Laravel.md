@@ -742,6 +742,16 @@ composer self-update --update-keys
 
 https://composer.github.io/pubkeys.htmlの中のtab public keyをコピーして実行
 
+
+
+##  curl error 6 while downloading https://repo.packagist.org/packages.json: Could not resolve host: repo.packagist.org 
+
+composer installで上記のエラー
+
+調査してみるとserverの問題みたいなのでawsをのサーバーを再起動してみる
+
+--> 解決！
+
 # Create Table
 
 ## create migration file
