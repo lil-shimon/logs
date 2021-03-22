@@ -107,11 +107,22 @@ assets:
 	- images/a_dot_burr.jpeg
 	- images/a_dot_ham.jpeg
 	
-	// then chenge like this
+	# then chenge like this
 	- images/example.png
 	
-	// be careful about indentation in yaml files. every indent is two spaces
+	# be careful about indentation in yaml files. every indent is two spaces
 ```
+
+or  just 
+
+```yaml
+assets:
+	- images/
+	
+	#it works like above one.
+```
+
+
 
 widget is like this
 
@@ -138,3 +149,26 @@ void main() => runApp(MaterialApp(home: Text('hello world')));
 
 ```
 
+
+
+# custom icon app
+
+app icon generator
+
+https://appicon.co/
+
+## Android
+
+Source: android/src/main/res/
+
+then change mipmap files into every download of the appicon website.
+
+### circle icon (Android)
+
+Source: android/src/main/res/
+
+on above path, create image asset (configure image asset) then import image path.
+
+## ios
+
+Source: iOS/Runner/AppIcon.appiconset
