@@ -88,6 +88,39 @@ image: NetwordImage(actual url on web) // amazing!!
 
 
 
+## Local images
+
+on Root directory, create imagse folder.
+
+Then put image file into images folder
+
+-- assets like this 
+
+```
+- images/example.png
+```
+
+to access images file like above, check pubspec.yaml and comment out this description
+
+```yaml
+assets:
+	- images/a_dot_burr.jpeg
+	- images/a_dot_ham.jpeg
+	
+	// then chenge like this
+	- images/example.png
+	
+	// be careful about indentation in yaml files. every indent is two spaces
+```
+
+widget is like this
+
+```dart
+assetImages('images/example.png')
+```
+
+
+
 # code
 
 ## => / {} is same meaning in flutter

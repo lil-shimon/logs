@@ -922,6 +922,22 @@ php artisan migrate
 
 that is all.
 
+
+
+### Drop unique keys
+
+
+
+to drop unique keys, run this command
+
+```php
+$table->dropUnique('key name (tableName_columnName_unique)');
+```
+
+Then, run migrate
+
+
+
 ### hasMany
 
 
