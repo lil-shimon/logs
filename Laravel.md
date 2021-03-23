@@ -2143,3 +2143,111 @@ nullや''をarray_mergeするとarrayが全てからになってしまう。
 1. Query -> child table id
 2. ancestor repository --> get ancestor data by child table id
 3. Return ---> id
+
+
+
+# show diff after updating
+
+## getOriginal
+
+show original value before updating
+
+```php
+$user = App\User::first();
+$user->name;                   //John
+$user->name = "Peter";         //Peter
+$user->getOriginal('name');    //John
+$user->getOriginal();          //Original $user record
+```
+
+
+
+## getDirty
+
+show what value are changed
+
+
+
+## Laravel-auditing
+
+This package will help you understand changes in your Eloquent models, by providing information
+about possible discrepancies and anomalies that could indicate business concerns or suspect activities.…
+
+------
+
+github: https://github.com/owen-it/laravel-auditing
+
+web: http://www.laravel-auditing.com/
+
+------
+
+### install
+
+```
+composer require owen-it/laravel-auditing
+```
+
+
+
+### usage
+
+```php
+//config/app.php
+
+'providers' => [
++    OwenIt\Auditing\AuditingServiceProvider::class,
+],
+```
+
+then run them
+
+```
+php artisan vendor:publish --provider "OwenIt\Auditing\AuditingServiceProvider" --tag="config"
+php artisan vendor:publish --provider "OwenIt\Auditing\AuditingServiceProvider" --tag="migrations"
+```
+
+--> you may get database/migrations/yyyy_mm_dd_nnnnnn_create_audits_table.php so run migrate
+
+Add some description on Model file like this ('declare what column want to include into audit')
+
+```php
+//model
+    <?php
+
+    namespace App\Models;
+
+    use Illuminate\Database\Eloquent\Model;
+		//insert
+    use OwenIt\Auditing\Contracts\Auditable;
+		// implement
+    class Product extends Model implements Auditable
+    {
+      // declare
+      use \OwenIt\Auditing\Auditable;
+      // column
+      protected $auiditInclude = ['user_id', 'category_id', 'title', 'body', 'published_at'];
+
+      // ...
+    }
+
+```
+
+```php
+//controller
+$audits = \OwenIt\Auditing\Models\Audit::with('user')
+                ->orderBy('created_at', 'desc')                
+                ->get();
+```
+
+```php
+<?php
+
+use OwenIt\Auditing\Models\Audit;
+
+// 全件取得
+$audits = Audit::all();
+
+// ID指定
+$audit = Audit::find(1);
+```
+
