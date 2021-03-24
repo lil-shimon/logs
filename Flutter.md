@@ -132,12 +132,36 @@ assetImages('images/example.png')
 
 
 
+## container
+
+### ※ container is Single-child layout widget (also padding, center etc...)
+
+Very similar to <div>
+
+containers with no children try to be as big as possible
+
+
+
+## SafeArea
+
+it moves containers to safe area that is not edge of screen
+
+### margin and padding
+
+```dart
+margin: EdgeInsets.all(value)
+margin: EdgeInsets.symmetic(vertical: value, horizontal: value)
+margin: EdgeInsets.fromLTRB(value, value, value, value)
+margin: EdgeInsets.only(left: value)
+```
+
+
+
 # code
 
 ## => / {} is same meaning in flutter
 
 ```dart
-
 // => = {}. {} is better.
 
 void main() {
@@ -183,5 +207,32 @@ Source: iOS/Runner/AppIcon.appiconset
 flutter config --enable-web
 flutter device // google chrome?
 flutter run -d chrome // start server!!!
+```
+
+
+
+# hot reload
+
+## create stateless widget
+
+```dart
+// class name = upper camel case
+class ClassName extends StatelessWidget {
+	@override
+  // stateless is created by this description "build" 
+  // build method
+	Widget build(BuildContext context) {
+		return Container(); // insert widget (e.g. inside runApp)
+	}
+}
+
+// almost magical!!!
+
+//then change
+void main () {
+  runApp(
+    ClassName()
+  )
+}
 ```
 
