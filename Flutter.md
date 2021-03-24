@@ -172,3 +172,16 @@ on above path, create image asset (configure image asset) then import image path
 ## ios
 
 Source: iOS/Runner/AppIcon.appiconset
+
+
+
+# web
+
+## setting
+
+```
+flutter config --enable-web
+flutter device // google chrome?
+flutter run -d chrome // start server!!!
+```
+
