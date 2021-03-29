@@ -1,19 +1,17 @@
-# table
+server side: Golang (echo)
+Front-end: React Native (Expo)
 
-## Users
+1対1のチャット(ランダム)
+1対1のチャット(ペルソナ)
+タイムライン(時間で消滅)(プロフィール表示)
+日記(時間消滅なしでプロフィールに一覧表示)
 
-- name
-- level
-- code
+フェーズ1
+	Gravity + タイムライン時間消去とダイアリー機能
+フェーズ2
+	ランダムチャット
+フェーズ3
+	ペルソナチャット
 
-## post
+期限：　夏前(7月)
 
-- comment
-- User_id (fk)
-- title
-
-
-
-## level
-
-- Name

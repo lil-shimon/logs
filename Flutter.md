@@ -236,3 +236,95 @@ void main () {
 }
 ```
 
+
+
+## State management
+
+### ephemeral state
+
+basically, one state has one widget (class) in flutter app. in case you want to share ephemeral state with other widget or pages, you have to use app state
+
+### App state
+
+Examples of application state:
+
+- User preferences
+- Login info
+- Notifications in a social networking app
+- The shopping cart in an e-commerce app
+- Read/unread state of articles in a news app
+
+implement provider( with inherit widget),  redux, BloC to use app state.
+
+![A flow chart. Start with 'Data'. 'Who needs it?'. Three options: 'Most widgets', 'Some widgets' and 'Single widget'. The first two options both lead to 'App state'. The 'Single widget' option leads to 'Ephemeral state'.](https://flutter.dev/assets/development/data-and-backend/state-mgmt/ephemeral-vs-app-state-3137024aa509b4df5d20ed7ed30fb8a0f7cff54ebc8ab0d6e39794bced87e27c.png)
+
+# mvvm
+
+view <---> view model <---> repository <---> repository local and remote
+
+viewからロジックや状態をview modelに分離したもの。
+
+### viewmodel
+
+ChangeNotifierを継承するとnotifyListenersが使える
+
+```dart
+class HomeViewModel extends ChangeNotifier {
+ int _counter = 0;
+ int get counter => _counter;
+
+ void incrementCounter() {
+   this._counter++;
+   notifyListeners();
+ }
+}
+```
+
+これを呼ぶとInjectionされているWidgetに通知が送信されて各Widgetがリビルド
+
+```dart
+@override
+ Widget build(BuildContext context) {
+   return Center(
+     child: Column(
+       mainAxisAlignment: MainAxisAlignment.center,
+       children: <Widget>[
+         Text(
+           'You have pushed the button this many times:',
+         ),
+         Text(
+           Provider.of<HomeViewModel>(context).counter.toString(),
+           style: Theme.of(context).textTheme.display1,
+         ),
+       ],
+     ),
+   );
+ }
+```
+
+Providr.of<HomeViewModel>でInjectionしています。このInjectionされているTextだけがリビルドされるのでパフォーマンスがいい
+
+# final
+
+constと同じ要領
+
+constはコンパイルで評価されるが、finalはされない
+
+--->ビルド時にもし同じ変数名で定義していてもconstはerrorになるが、finalはスキップされる
+
+また、finalは型推論をしてくれるので型を書かなくても大丈夫。(もちろん書いても大丈夫)
+
+# static
+
+これはおまじないのような感じで、classの中で定数を宣言するときはstaticを頭につける
+
+```dart
+class Test{
+   static const qux = "qux";
+}
+
+class Test{
+    const qux = "qux"; //<--静的フィールドのみがconstで宣言できるってエラーが出る
+}
+```
+

@@ -2251,3 +2251,29 @@ $audits = Audit::all();
 $audit = Audit::find(1);
 ```
 
+
+
+## phpmyadmin import settings
+
+改行コード: LF
+
+フォーマット: CSV using LOAD DATA
+
+フォーマット特有のオプション
+
+区切り記号:  ,
+
+囲み記号: Nullもしくは空白
+
+エスケープ記号: \
+
+終端記号: \n
+
+カラム名: Nullもしくは空白
+
+Useful? commands
+
+```
+LOAD DATA LOCAL INFILE 'file name' INTO TABLE 'table mame' FIELDS TERMINATED BY ';' ENCLOSED BY '"' ESCAPED BY '¥¥' LINES TERMINATED BY '¥n'
+```
+
