@@ -1166,3 +1166,26 @@ React-smooth-dnd
 https://github.com/kutlugsahin/react-smooth-dnd
 
 https://laravelarticle.com/laravel-6-drag-and-drop-menu-sorting#:~:text=Laravel%206%20drag%20and%20drop%20menu%20sorting.%20In,anything%20user%20wants%20to%20sort%20their%20sorting%20order.
+
+create list want to swap
+
+```typescript
+const swapList = useCallback(
+    (sourceIndex: number, targetIndex: number) => {
+      [Maintenances[targetIndex], Maintenances[sourceIndex]] = [
+        Maintenances[sourceIndex],
+        Maintenances[targetIndex],
+      ];
+      setMaintenances(Maintenances.splice(0));
+    },
+    [Maintenances]
+  );
+```
+
+# Invariant Violation: Expected targetIds to be registered.
+
+this error occurs when you use dnd-provider. it indicates that you should put dnd provider backend on your pages or top component.
+
+or
+
+This issue has been automatically marked as stale because it has not had recent activity. It will be closed if no further activity occurs. Thank you for your contributions.

@@ -576,6 +576,28 @@ https://stackoverflow.com/questions/48619445/permission-denied-error-using-larav
 
 
 
+## cannot add foreign key
+
+somehow cannot add foreign key in int column (references on id)
+
+also id is not working...
+
+```
+$table->id(); //does not work
+```
+
+dunno why this is happen but it must be php version or laravel / composer version.
+
+#### solution
+
+use big integer instead of id or integer.
+
+```
+$table->bigInteger('id'); 
+```
+
+in this case, the migration is working well.
+
 
 
 ## "Argument 2 passed to App\\Http\\Repositories\\OrderRepository::store() must be of the type array, null given, called in /var/www/app/Http/Controllers/OrderController.php on line 49",
@@ -2275,5 +2297,39 @@ Useful? commands
 
 ```
 LOAD DATA LOCAL INFILE 'file name' INTO TABLE 'table mame' FIELDS TERMINATED BY ';' ENCLOSED BY '"' ESCAPED BY '¥¥' LINES TERMINATED BY '¥n'
+```
+
+
+
+# 中間テーブルCRUD（コード規約外）
+
+
+
+## Model (relation)
+
+```php
+public function tests()
+{
+  return $this->belongsToMany("related", "table", 'foreign pivot key', 'related pivot key')
+}
+
+// e.g.
+public function categories()
+{
+  return $this->belongsToMany(DistributionCategory::class, "enterprise_distribution_categories", "distribution_id", "category_id")
+}
+```
+
+
+
+## Controller / Repository
+
+```php
+// insert -> attach
+// repository
+$distribution = new EnterpriseDistribution;
+$distribution->fill($enterprise_distribution)->save();
+$distribution_categories = $enterprise_distribution['categories']
+$distribution->categories()->attach($distribution_categories)
 ```
 

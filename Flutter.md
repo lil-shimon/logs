@@ -328,3 +328,19 @@ class Test{
 }
 ```
 
+# column and row
+
+it has a lot of child widget so it must have children widget. not child.
+
+```dart
+child: Column(
+  verticalDirection: VerticalDirection.top // column start from bottom. default option is down.
+  mainAxisAlignment: MainAxisAlignment.center // options = center, start, end...
+  // spaceEvenly => arranged at equal intervals
+	children: <widget>[
+    // in between these square brankets, I can put lots of widgets.
+  ]
+  )
+)
+```
+
